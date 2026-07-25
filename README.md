@@ -78,13 +78,11 @@ The Osprey Controller has **4 independent relay channels** that act as automatic
 
 The Web Controller is a visual, dual-theme control dashboard that runs in your web browser on both Desktop and Mobile (Android).
 
-### Android Mobile & Desktop Compatibility:
-- **Desktop**: Open in Google Chrome, Microsoft Edge, or Opera. Connect via USB cable.
-- **Android Mobile**: Connect your microcontroller to your Android phone using a **USB-C OTG (On-The-Go) adapter**. Open the page in **Google Chrome** or **Opera**. The integrated Google WebSerial WebUSB polyfill will automatically bridge Web Serial requests over WebUSB.
-- **iOS Note**: Apple iOS (iPhones / iPads) blocks WebSerial and WebUSB API access across all browsers due to WebKit security policies.
+### Desktop Compatibility:
+- Open in Google Chrome, Microsoft Edge, or Opera. Connect via USB cable.
 
 ### Logging In & Connecting:
-1. Plug the Osprey Controller into your computer or Android phone's USB port.
+1. Plug the Osprey Controller into your computer USB port.
 2. Open **[OSPREY WEB Controller](https://micromakerlabsfiles-git.github.io/OSPREY-Controller/)** in a compatible browser.
 3. Click the **Connect Controller** button.
 4. A browser popup will prompt you to select the connected USB device ("ESP32 USB" or USB serial bridge).
