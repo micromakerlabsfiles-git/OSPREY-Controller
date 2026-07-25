@@ -1451,19 +1451,39 @@
           throw new Error("WebUSB (navigator.usb) is not available on this browser/context.");
         }
 
-        const filters = options.filters || [
-          { vendorId: 0x303a }, // Espressif ESP32-C3 / S3 Native USB
-          { vendorId: 0x10c4 }, // CP2102
-          { vendorId: 0x1a86 }, // CH340
-          { vendorId: 0x0403 }, // FTDI
-          { vendorId: 0x2341 }  // Arduino
-        ];
+        // Map both vendorId & usbVendorId filters properly for WebUSB
+        let usbFilters = [];
+        if (options.filters && Array.isArray(options.filters)) {
+          usbFilters = options.filters.map(f => {
+            const filter = {};
+            if (f.vendorId !== undefined) filter.vendorId = f.vendorId;
+            if (f.usbVendorId !== undefined) filter.vendorId = f.usbVendorId;
+            if (f.productId !== undefined) filter.productId = f.productId;
+            if (f.usbProductId !== undefined) filter.productId = f.usbProductId;
+            return filter;
+          }).filter(f => Object.keys(f).length > 0);
+        }
+
+        if (usbFilters.length === 0) {
+          usbFilters = [
+            { vendorId: 0x303a }, // Espressif ESP32-C3 / S3 / ESP8266
+            { vendorId: 0x10c4 }, // Silicon Labs CP2102 / CP2104
+            { vendorId: 0x1a86 }, // QinHeng CH340 / CH341 / CH9102
+            { vendorId: 0x0403 }, // FTDI
+            { vendorId: 0x2341 }, // Arduino
+            { vendorId: 0x2e8a }  // Raspberry Pi Pico
+          ];
+        }
 
         let device;
         try {
-          device = await navigator.usb.requestDevice({ filters });
+          device = await navigator.usb.requestDevice({ filters: usbFilters });
         } catch (err) {
-          device = await navigator.usb.requestDevice({ filters: [] });
+          if (err.name === 'NotFoundError' || err.message.includes('No device selected')) {
+            throw err; // User cancelled the USB picker prompt
+          }
+          // Retry matching any USB device
+          device = await navigator.usb.requestDevice({ filters: [{}] });
         }
 
         return new WebUSBSerialPort(device);
@@ -1488,11 +1508,24 @@
       }
     }
 
-    // Auto-polyfill navigator.serial if native Web Serial is absent
+    // Multi-layer Web Serial & WebUSB API provider
     function getSerialApi() {
+      // 1. Native Web Serial API (Desktop Chrome, Edge, Opera)
       if ('serial' in navigator && navigator.serial) {
         return navigator.serial;
       }
+      // 2. Official Google webserial-polyfill if loaded via script CDN
+      try {
+        if (typeof serial !== 'undefined' && serial && typeof serial.Serial === 'function') {
+          if (!window._polyfillInstance) window._polyfillInstance = new serial.Serial();
+          return window._polyfillInstance;
+        }
+        if (typeof window.serial !== 'undefined' && window.serial && typeof window.serial.Serial === 'function') {
+          if (!window._polyfillInstance) window._polyfillInstance = new window.serial.Serial();
+          return window._polyfillInstance;
+        }
+      } catch (e) {}
+      // 3. Embedded Zero-Dependency Inline WebUSB Serial Driver (Android Chrome / Opera)
       if ('usb' in navigator && navigator.usb) {
         if (!window._inlineWebUSBSerial) {
           window._inlineWebUSBSerial = new WebUSBSerialAPI();
@@ -1520,10 +1553,11 @@
 
       try {
         const filters = [
-          { usbVendorId: 0x303a }, // Espressif ESP32-C3
-          { usbVendorId: 0x10c4 }, // CP2102
-          { usbVendorId: 0x1a86 }, // CH340
-          { usbVendorId: 0x0403 }  // FTDI
+          { usbVendorId: 0x303a, vendorId: 0x303a }, // Espressif ESP32-C3 / S3
+          { usbVendorId: 0x10c4, vendorId: 0x10c4 }, // CP2102
+          { usbVendorId: 0x1a86, vendorId: 0x1a86 }, // CH340
+          { usbVendorId: 0x0403, vendorId: 0x0403 }, // FTDI
+          { usbVendorId: 0x2341, vendorId: 0x2341 }  // Arduino
         ];
 
         logMessage("Prompting for USB serial device connection...", "sys");
@@ -1531,6 +1565,9 @@
         try {
           port = await serialApi.requestPort({ filters });
         } catch (filterErr) {
+          if (filterErr.name === 'NotFoundError' || (filterErr.message && filterErr.message.includes('No device selected'))) {
+            throw filterErr;
+          }
           port = await serialApi.requestPort();
         }
 
@@ -1550,6 +1587,7 @@
         alert(`Connection failed: ${err.message}${extraTip}`);
       }
     }
+
 
     async function disconnectSerial() {
       keepReading = false;
