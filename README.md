@@ -27,62 +27,45 @@ The Osprey Controller features a single tactile touch sensor and a high-contrast
 
 ## 2. Connecting Equipment to the Relay Channels
 
-The Osprey Controller has **4 independent relay channels** that act as automatic switches. Think of each channel as a standard light switch that is turned on and off by the controller.
+The Osprey Controller features **4 independent high-capacity relay channels** (Channel 1 through Channel 4) designed for safe AC or DC electrical load switching.
 
-### Safety Guidelines:
-- **Disconnect power** to all cables before making connections.
-- The controller switches only **one leg** of the power line (usually the Live/Positive wire). The neutral or ground wires must bypass the controller and connect directly to your equipment.
+### Relay Electrical Specifications:
+- **Relay Model**: DC5V High-Performance Relays
+- **AC Load Ratings**: 250V AC @ 10A / 125V AC @ 12A (50/60 Hz)
+- **DC Load Ratings**: 30V DC @ 10A
+- **Coil Voltage**: 5V DC
+- **Contact Type**: SPDT / Dry Contact switching via Common (COM) and Normally Open (NO) / Normally Closed (NC) screw terminals.
 
-### Connecting Peripherals:
+### Wiring & Safety Guidelines:
+- **Disconnect Power**: Always disconnect line power before connecting or adjusting terminal wire connections.
+- **Single Leg Switching**: The relay switches only **one leg** of the power line (usually the Live / Positive wire). Neutral, ground, or return lines must bypass the controller and connect directly to your equipment.
+- **Current Limits**: Ensure the load connected to any individual channel does not exceed **10A**.
 
-#### Channel 1: Primary Spotlight / Main Ambient Light
-- **Typical Use**: Heavy-duty lighting like spotlights or high-power stage lights.
-- **Connection**:
-  1. Cut the Positive/Live wire of the spotlight power cord.
-  2. Insert one cut end into the Channel 1 terminal (marked Common/COM).
-  3. Insert the other cut end into the Normally Open (NO) terminal.
-  4. Plug the spotlight cord into the wall outlet.
-
-#### Channel 2: Special Effects (Laser / Strobe)
-- **Typical Use**: Laser projectors, visual strobe flashers, or patterns.
-- **Connection**:
-  1. Splice the hot line of the laser's power adapter.
-  2. Run the hot line through the Channel 2 terminal block.
-  3. Ground/Neutral lines must go directly from the wall outlet to the laser.
-
-#### Channel 3: Fog Machine / Party Gear
-- **Typical Use**: Smoke/fog generators, bubble machines, or atmospheric machines.
-- **Connection**:
-  1. Connect the remote-trigger or main power line of the fog machine through the Channel 3 terminal contacts.
-  2. Activation of Channel 3 closes the contact, simulating pressing the manual button on a fog machine remote.
-
-#### Channel 4: Secondary Light / Auxiliary Load
-- **Typical Use**: Accent LED strips, background wash lights, or secondary projectors.
-- **Connection**:
-  1. Connect the Positive line of the low-voltage power supply (e.g., 12V DC adapter) through Channel 4.
-  2. The negative line connects directly from the power supply to the LED strip.
+### Generic Channel Wiring Steps:
+1. Identify the Live / Positive power lead of your electrical load.
+2. Connect one cut lead into the **Common (COM)** terminal of the designated Relay Channel (CH 1–4).
+3. Connect the second lead into the **Normally Open (NO)** terminal of the same channel.
+4. When the Osprey Controller activates the channel, the internal relay contacts close to complete the power circuit.
 
 ---
 
 ## 3. Using the Web Controller Manager
 
-The Web Controller is a visual, dual-theme control dashboard that runs in your web browser on both Desktop and Mobile (Android).
+The Web Controller is a visual, dual-theme control dashboard that runs in your desktop web browser.
 
-### Android Mobile & Desktop Compatibility:
-- **Desktop**: Open in Google Chrome, Microsoft Edge, or Opera. Connect via USB cable.
-- **Android Mobile**: Connect your microcontroller to your Android phone using a **USB-C OTG (On-The-Go) adapter**. Open the page in **Google Chrome** or **Opera**. The integrated Google WebSerial WebUSB polyfill will automatically bridge Web Serial requests over WebUSB.
-- **iOS Note**: Apple iOS (iPhones / iPads) blocks WebSerial and WebUSB API access across all browsers due to WebKit security policies.
+### Browser Compatibility:
+- **Supported Desktop Browsers**: Open in **Google Chrome**, **Microsoft Edge**, or **Opera** on Windows, macOS, or Linux. Connect via standard USB cable.
 
 ### Logging In & Connecting:
-1. Plug the Osprey Controller into your computer or Android phone's USB port.
-2. Open **[index.html](file:///f:/Codes/Osprey_controller/index.html)** in a compatible browser.
+1. Plug the Osprey Controller into your computer's USB port.
+2. Open the Web Manager at **[OSPREY Web Controller](https://micromakerlabsfiles-git.github.io/OSPREY-Controller/)** in a compatible desktop browser.
 3. Click the **Connect Controller** button.
 4. A browser popup will prompt you to select the connected USB device ("ESP32 USB" or USB serial bridge).
 5. Once connected, the dashboard opens for configuration management.
 
 ### Logging Out & Disconnecting:
 - Click **Disconnect** on the top header to close the serial port safely.
-- **Auto-Logout Security**: If the physical USB cable or OTG connection is unplugged at any point, the dashboard automatically detects the disconnection and returns to the login screen.
+- **Auto-Logout Security**: If the physical USB cable is unplugged at any point, the dashboard automatically detects the disconnection and returns to the login screen.
 
 ### Theme & Layout Customization:
 - **Theme Toggle**: Click the circular toggle button in the header to switch between **Dark Mode** and **Light Mode**.
@@ -102,4 +85,3 @@ The Web Controller is a visual, dual-theme control dashboard that runs in your w
 - Click **Save & Sync** to persist configuration into flash memory (NVS).
 - Click **Read Config** to fetch current board settings.
 - Click **Reset Defaults** to restore factory default configuration.
-
