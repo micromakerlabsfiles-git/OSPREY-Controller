@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Osprey Controller Web Manager</title>
+  <title>Osprey Controller Web Controller</title>
   <!-- Outfit & JetBrains Mono Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- WebSerial WebUSB Polyfill for Android Mobile Support -->
-  <script src="https://unpkg.com/webserial-polyfill@1.0.15/dist/build/webserial.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/webserial-polyfill@1.0.15/dist/build/webserial.js"></script>
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+
+
   <style>
     :root {
       /* Light Theme Variables */
@@ -20,15 +21,17 @@
       --card-border: rgba(0, 0, 0, 0.08);
       --text-main: #1e1f29;
       --text-muted: #6b6d85;
-      --accent: #ff6b35; /* Osprey Orange */
+      --accent: #ff6b35;
+      /* Osprey Orange */
       --accent-glow: rgba(255, 107, 53, 0.12);
-      --teal: #007a8a; /* High contrast teal */
+      --teal: #007a8a;
+      /* High contrast teal */
       --teal-glow: rgba(0, 122, 138, 0.12);
       --success: #2a9d8f;
       --error: #e63946;
       --border-radius: 12px;
       --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-      
+
       --console-bg: #f8f9fa;
       --console-text: #1e1f29;
       --log-tx-color: #2e7d32;
@@ -36,9 +39,9 @@
       --log-sys-color: #b36f00;
       --log-err-color: #c62828;
 
-      --radial-glow-top: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, rgba(0,0,0,0) 70%);
-      --radial-glow-bottom: radial-gradient(circle, rgba(0, 122, 138, 0.06) 0%, rgba(0,0,0,0) 70%);
-      
+      --radial-glow-top: radial-gradient(circle, rgba(255, 107, 53, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+      --radial-glow-bottom: radial-gradient(circle, rgba(0, 122, 138, 0.06) 0%, rgba(0, 0, 0, 0) 70%);
+
       --btn-sec-bg: #ffffff;
       --btn-sec-text: #1e1f29;
       --btn-sec-border: rgba(0, 0, 0, 0.08);
@@ -60,7 +63,7 @@
       --teal-glow: rgba(74, 210, 228, 0.2);
       --success: #4ade80;
       --error: #f87171;
-      
+
       --console-bg: #11111a;
       --console-text: #e0e0e9;
       --log-tx-color: #4ade80;
@@ -68,9 +71,9 @@
       --log-sys-color: #facc15;
       --log-err-color: #f87171;
 
-      --radial-glow-top: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, rgba(0,0,0,0) 70%);
-      --radial-glow-bottom: radial-gradient(circle, rgba(74, 210, 228, 0.1) 0%, rgba(0,0,0,0) 70%);
-      
+      --radial-glow-top: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+      --radial-glow-bottom: radial-gradient(circle, rgba(74, 210, 228, 0.1) 0%, rgba(0, 0, 0, 0) 70%);
+
       --btn-sec-bg: rgba(255, 255, 255, 0.05);
       --btn-sec-text: #f0f0f5;
       --btn-sec-border: rgba(255, 255, 255, 0.08);
@@ -108,7 +111,7 @@
       pointer-events: none;
       transition: background 0.3s ease;
     }
-    
+
     .glow-bg-bottom {
       position: fixed;
       width: 400px;
@@ -132,7 +135,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
       transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
@@ -167,7 +170,7 @@
       color: var(--text-main);
       cursor: pointer;
       transition: var(--transition);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
     }
 
     .btn-theme-toggle:hover {
@@ -186,7 +189,7 @@
       padding: 6px 14px;
       border-radius: 20px;
       border: 1px solid var(--card-border);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.03);
       transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
@@ -201,6 +204,68 @@
     .status-badge.connected .status-dot {
       background: var(--success);
       box-shadow: 0 0 6px var(--success);
+    }
+
+    /* Navigation Tabs */
+    .nav-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(0, 0, 0, 0.05);
+      padding: 4px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+    }
+
+    body.dark-theme .nav-tabs {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-tab {
+      padding: 7px 16px;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition);
+    }
+
+    .nav-tab:hover {
+      color: var(--text-main);
+    }
+
+    .nav-tab.active {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);
+    }
+
+    /* User Manual Section Container */
+    .manual-container {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1.5rem;
+      width: 100%;
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        gap: 12px;
+        padding: 1rem;
+      }
+
+      .nav-tabs {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     /* Connection Card Styling */
@@ -255,7 +320,8 @@
       margin: 2rem auto;
       padding: 0 1.5rem;
       width: 100%;
-      display: none; /* Hidden by default until login */
+      display: none;
+      /* Hidden by default until login */
       grid-template-columns: 1fr 1fr;
       gap: 2rem;
       flex-grow: 1;
@@ -403,7 +469,7 @@
       color: var(--text-muted);
     }
 
-    .style-option input[type="radio"]:checked + .style-label {
+    .style-option input[type="radio"]:checked+.style-label {
       border-color: var(--teal);
       background: var(--reorder-hover-bg);
       color: var(--teal);
@@ -511,14 +577,14 @@
       background-color: white;
       transition: .3s;
       border-radius: 50%;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
     }
 
-    input:checked + .slider {
+    input:checked+.slider {
       background-color: var(--success);
     }
 
-    input:checked + .slider:before {
+    input:checked+.slider:before {
       transform: translateX(24px);
     }
 
@@ -584,7 +650,7 @@
       color: var(--text-main);
       cursor: pointer;
       transition: var(--transition);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     }
 
     .btn-arrow:hover {
@@ -728,7 +794,7 @@
       gap: 8px;
       transition: var(--transition);
       border: 1px solid transparent;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     }
 
     .btn-primary {
@@ -758,7 +824,8 @@
       background: transparent;
       border: 1px solid var(--error);
       color: var(--error);
-      display: none; /* Shown only when connected */
+      display: none;
+      /* Shown only when connected */
     }
 
     .btn-disconnect:hover {
@@ -792,10 +859,25 @@
       transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
     }
 
-    .log-tx { color: var(--log-tx-color); font-weight: 600; }
-    .log-rx { color: var(--log-rx-color); font-weight: 600; }
-    .log-sys { color: var(--log-sys-color); font-weight: 600; }
-    .log-err { color: var(--log-err-color); font-weight: 600; }
+    .log-tx {
+      color: var(--log-tx-color);
+      font-weight: 600;
+    }
+
+    .log-rx {
+      color: var(--log-rx-color);
+      font-weight: 600;
+    }
+
+    .log-sys {
+      color: var(--log-sys-color);
+      font-weight: 600;
+    }
+
+    .log-err {
+      color: var(--log-err-color);
+      font-weight: 600;
+    }
 
     footer {
       text-align: center;
@@ -805,7 +887,7 @@
       border-top: 1px solid var(--card-border);
       background: var(--btn-sec-bg);
       margin-top: auto;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.01);
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.01);
       transition: background-color 0.3s ease, border-color 0.3s ease;
     }
 
@@ -813,11 +895,11 @@
     ::-webkit-scrollbar {
       width: 6px;
     }
-    
+
     ::-webkit-scrollbar-track {
       background: rgba(0, 0, 0, 0.03);
     }
-    
+
     ::-webkit-scrollbar-thumb {
       background: rgba(0, 0, 0, 0.1);
       border-radius: 3px;
@@ -828,6 +910,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div class="glow-bg"></div>
@@ -835,33 +918,59 @@
 
   <header>
     <div class="header-logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
       </svg>
       <h1>OSPREY CONTROLLER</h1>
     </div>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="nav-tabs" aria-label="Main Navigation">
+      <button class="nav-tab active" id="tab-btn-controller" onclick="switchTab('controller')">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0m-9.75 0h9.75" />
+        </svg>
+        Web Controller
+      </button>
+      <button class="nav-tab" id="tab-btn-manual" onclick="switchTab('manual')">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+        </svg>
+        User Manual
+      </button>
+    </nav>
+
     <div class="header-controls">
       <!-- Save & Sync Option on Header (Starts disabled) -->
-      <button class="btn btn-primary" id="btn-write" disabled style="padding: 6px 14px; font-size: 0.85rem; height: 36px; display: flex; align-items: center; gap: 6px;">
+      <button class="btn btn-primary" id="btn-write" disabled
+        style="padding: 6px 14px; font-size: 0.85rem; height: 36px; display: flex; align-items: center; gap: 6px;">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
         </svg>
         Save & Sync
       </button>
-      
+
       <!-- Disconnect Option on Header -->
-      <button class="btn btn-disconnect" id="btn-disconnect-header" style="padding: 6px 14px; font-size: 0.85rem; height: 36px; display: flex; align-items: center; gap: 6px;">
+      <button class="btn btn-disconnect" id="btn-disconnect-header"
+        style="padding: 6px 14px; font-size: 0.85rem; height: 36px; display: flex; align-items: center; gap: 6px;">
         <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         Disconnect
       </button>
 
       <!-- Theme Switcher -->
       <button class="btn-theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
-        <svg id="theme-icon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <svg id="theme-icon" width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          stroke-width="2.5">
           <!-- moon shape default -->
-          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
         </svg>
       </button>
 
@@ -877,22 +986,21 @@
     <div class="login-card">
       <div class="login-icon">
         <svg width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
         </svg>
       </div>
       <h2 class="login-title">Osprey Manager Login</h2>
-      <p class="login-subtitle">Connect your Osprey Controller board via a USB cable. Make sure the board is powered on, then click connect below to configure your device preferences.</p>
-      <button class="btn btn-primary" id="btn-login-connect" style="justify-content: center; width: 100%; padding: 12px;">
+      <p class="login-subtitle">Connect your Osprey Controller board via a USB cable. Make sure the board is powered on,
+        then click connect below to configure your device preferences.</p>
+      <button class="btn btn-primary" id="btn-login-connect"
+        style="justify-content: center; width: 100%; padding: 12px;">
         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
         </svg>
         Connect Controller
       </button>
-
-      <div style="margin-top: 0.5rem; padding: 12px; background: rgba(0, 122, 138, 0.06); border: 1px solid var(--teal-glow); border-radius: 8px; font-size: 0.82rem; text-align: left; line-height: 1.5; color: var(--text-main);">
-        <strong style="color: var(--teal); display: block; margin-bottom: 4px;">📱 Android Mobile Connection Tip:</strong>
-        Connect your ESP32-C3 using a <strong>USB-C OTG cable</strong>. On Android, use <strong>Google Chrome</strong> or <strong>Opera</strong> and open the page via <code>file://</code> or <code>https://</code> (Chrome disables WebUSB on plain http:// addresses).
-      </div>
     </div>
   </div>
 
@@ -903,17 +1011,18 @@
     <div class="card">
       <h2 class="card-title">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.43l-1.003.828c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.43l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.43l-1.003.828c-.293.241-.438.613-.43.992a7.723 7.723 0 010 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.43l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 010-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28z" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
         Device Branding & Channels
       </h2>
-      
+
       <div class="form-group">
         <label for="bootText">CONTROLLER NAME (BOOT TEXT)</label>
         <input type="text" id="bootText" placeholder="OSPREY CONTROLLER" maxlength="32">
       </div>
-      
+
       <div class="form-group">
         <label>CHANNEL LABELS (MAX 12 CHARS)</label>
         <div class="form-row">
@@ -943,7 +1052,8 @@
     <div class="card">
       <h2 class="card-title">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-3.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-3.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
         </svg>
         Layout & System Settings
       </h2>
@@ -955,7 +1065,8 @@
             <input type="radio" name="menuStyle" id="styleHorizontal" value="0">
             <label class="style-label" for="styleHorizontal">
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
               </svg>
               Horizontal Flipper
             </label>
@@ -964,7 +1075,8 @@
             <input type="radio" name="menuStyle" id="styleVertical" value="1" checked>
             <label class="style-label" for="styleVertical">
               <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
               </svg>
               Vertical Carousel
             </label>
@@ -1002,23 +1114,26 @@
     <div class="card" style="grid-column: span 2;">
       <h2 class="card-title">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
         </svg>
         Configure & Rearrange Menu Options
       </h2>
       <label>REARRANGE OPTIONS OR DELETE UNNECESSARY ONES (STANDBY OFF REMAINS LOCKED AT INDEX 1)</label>
-      
+
       <div class="reorder-list" id="reorder-list">
         <!-- Will be populated dynamically by script -->
       </div>
 
       <!-- Add Unused Options Container -->
-      <div class="add-option-container" id="add-option-container" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--card-border); display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+      <div class="add-option-container" id="add-option-container"
+        style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--card-border); display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
         <label for="add-mode-select" style="white-space: nowrap; margin-bottom: 0;">ADD MODE:</label>
         <select id="add-mode-select" class="form-select" style="max-width: 250px;">
           <!-- Populated dynamically -->
         </select>
-        <button class="btn btn-primary" id="btn-add-option" style="padding: 8px 16px; font-size: 0.9rem; height: 38px;">+ Add Option</button>
+        <button class="btn btn-primary" id="btn-add-option"
+          style="padding: 8px 16px; font-size: 0.9rem; height: 38px;">+ Add Option</button>
       </div>
     </div>
 
@@ -1026,13 +1141,15 @@
     <div class="button-group">
       <button class="btn btn-secondary" id="btn-read">
         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
         </svg>
         Read Config
       </button>
       <button class="btn btn-secondary" id="btn-defaults">
         <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 1121.21 7.89M9 11l3-3 3 3m-3-3v12" />
         </svg>
         Reset Defaults
       </button>
@@ -1042,11 +1159,161 @@
     <div class="card console-card">
       <h2 class="card-title">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
         </svg>
         Live Serial Terminal Log
       </h2>
-      <div class="console-log" id="console-log">Initializing Console... Available Web Serial port will show transactions here.</div>
+      <div class="console-log" id="console-log">Initializing Console... Available Web Serial port will show transactions
+        here.</div>
+    </div>
+
+  </div>
+
+  <!-- User Manual Container (Tab 2) -->
+  <div class="manual-container" id="manual-container">
+
+    <!-- Section 1: Quick Operator & Navigation Guide -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <h2 class="card-title" style="color: var(--teal);">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="24" height="24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+        </svg>
+        Device Touch Operations & Quick Guide
+      </h2>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
+        Quick reference guide for operating the Osprey Controller using its single tactile touch sensor and
+        high-contrast OLED display.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+        <!-- Gesture 1 -->
+        <div
+          style="padding: 1rem; background: var(--btn-sec-bg); border: 1px solid var(--card-border); border-radius: 10px;">
+          <div
+            style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--accent); margin-bottom: 6px;">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+            </svg>
+            Short Tap (Quick Touch)
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-main); line-height: 1.4;">
+            Advances to the next menu option. Highlights and scrolls through available modes on the OLED screen.
+          </p>
+        </div>
+
+        <!-- Gesture 2 -->
+        <div
+          style="padding: 1rem; background: var(--btn-sec-bg); border: 1px solid var(--card-border); border-radius: 10px;">
+          <div
+            style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--teal); margin-bottom: 6px;">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z" />
+            </svg>
+            Double Tap (2 Quick Touches)
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-main); line-height: 1.4;">
+            Toggles the highlighted channel relay <strong>ON</strong> or <strong>OFF</strong> when in Manual Modes.
+          </p>
+        </div>
+
+        <!-- Gesture 3 -->
+        <div
+          style="padding: 1rem; background: var(--btn-sec-bg); border: 1px solid var(--card-border); border-radius: 10px;">
+          <div
+            style="display: flex; align-items: center; gap: 8px; font-weight: 700; color: var(--error); margin-bottom: 6px;">
+            <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+            </svg>
+            Long Press (Hold ~1.0s)
+          </div>
+          <p style="font-size: 0.88rem; color: var(--text-main); line-height: 1.4;">
+            Immediately triggers <strong>STANDBY OFF</strong> from any state. Beeps twice and turns off all relay
+            channels instantly.
+          </p>
+        </div>
+      </div>
+
+      <div
+        style="margin-top: 1rem; padding: 12px; background: rgba(0, 122, 138, 0.05); border: 1px solid var(--teal-glow); border-radius: 8px; font-size: 0.85rem; line-height: 1.5;">
+        <strong style="color: var(--teal);">💡 Visual OLED Status & Safety Delays:</strong>
+        <ul style="margin-left: 1.25rem; margin-top: 4px;">
+          <li><strong>White BG + Black Text:</strong> Manual channel relay is ACTIVE (ON).</li>
+          <li><strong>Black BG + White Text:</strong> Manual channel relay is INACTIVE (OFF).</li>
+          <li><strong>Auto-Mode 2s Delay:</strong> 2-second safety buffer prevents relays from toggling rapidly while
+            scrolling through modes. Holding touch pauses navigation.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Section 2: Web Controller & Navigation Settings Guide -->
+    <div class="card">
+      <h2 class="card-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" width="24" height="24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0m-9.75 0h9.75" />
+        </svg>
+        Web Controller & Navigation Settings
+      </h2>
+
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.25rem;">
+        How to configure device navigation, screen layouts, channel labels, and persistent NVS memory options via Web
+        Serial.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;">
+        <!-- Card Navigation Settings -->
+        <div
+          style="padding: 1.25rem; background: var(--btn-sec-bg); border: 1px solid var(--card-border); border-radius: 10px;">
+          <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--accent); margin-bottom: 8px;">⚙️ Navigation &
+            Layout Settings</h3>
+          <ul style="font-size: 0.88rem; line-height: 1.6; color: var(--text-main); padding-left: 1.2rem;">
+            <li><strong>Menu Layout Style:</strong> Switch between <em>Horizontal Flipper</em> (centered mode card with
+              left/right arrows) and <em>Vertical Carousel</em> (3-mode vertical selection).</li>
+            <li><strong>Device Font Family:</strong> Choose font styling (Helvetica, Monospace, Profont) rendered on the
+              OLED screen.</li>
+            <li><strong>Touch Threshold:</strong> Adjust long-press hold duration required for Standby emergency stop
+              (500ms to 5000ms).</li>
+            <li><strong>Auto Duration:</strong> Set default timer for auto-cycle sequence modes (10s to 600s).</li>
+          </ul>
+        </div>
+
+        <!-- Card Channel & Mode Customization -->
+        <div
+          style="padding: 1.25rem; background: var(--btn-sec-bg); border: 1px solid var(--card-border); border-radius: 10px;">
+          <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--teal); margin-bottom: 8px;">🏷️ Branding &
+            Reordering</h3>
+          <ul style="font-size: 0.88rem; line-height: 1.6; color: var(--text-main); padding-left: 1.2rem;">
+            <li><strong>Controller Boot Text:</strong> Customize the 32-character startup animation string.</li>
+            <li><strong>Channel Labels:</strong> Rename Relay Channels 1-4 (up to 12 chars each, e.g. SPOTLIGHT, LASER,
+              FOG).</li>
+            <li><strong>Menu Option Rearrangement:</strong> Use UP/DOWN arrows to reorder modes or DELETE unnecessary
+              modes. Re-add modes anytime using "+ Add Option".</li>
+            <li><strong>Save & Sync:</strong> Click <em>Save & Sync</em> in the header to save settings directly into
+              microcontroller flash memory (NVS).</li>
+          </ul>
+        </div>
+
+        <!-- Hardware Relay Assignment -->
+        <div
+          style="padding: 1.25rem; background: var(--btn-sec-bg); border: 1px solid var(--card-border); border-radius: 10px;">
+          <h3 style="font-size: 1.05rem; font-weight: 600; color: var(--success); margin-bottom: 8px;">⚡ Relay Channel
+            Specifications</h3>
+          <ul style="font-size: 0.88rem; line-height: 1.6; color: var(--text-main); padding-left: 1.2rem;">
+            <li><strong>Relay Model:</strong> 5V DC Relays.</li>
+            <li><strong>AC Ratings:</strong> Up to 250V AC @ 10A / 125V AC @ 12A (50/60Hz).</li>
+            <li><strong>DC Ratings:</strong> Up to 30V DC @ 10A.</li>
+            <li><strong>Outputs:</strong> 4 x Independent Dry Contact Channels (CH 1–4).</li>
+            <li><strong>Terminals:</strong> Common (COM) & Normally Open (NO) Contacts.</li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -1062,7 +1329,7 @@
     let inputBuffer = "";
     let keepReading = true;
     let readLoopPromise = null;
-    
+
     // Core modes definition (indexes 0 to 10)
     const rawModes = {
       0: "Standby OFF",
@@ -1117,29 +1384,79 @@
       consoleLog.scrollTop = consoleLog.scrollHeight;
     }
 
+    // --- TAB SWITCHING MANAGEMENT ---
+    let currentTab = 'controller';
+
+    function switchTab(tabName) {
+      currentTab = tabName;
+      const btnController = document.getElementById("tab-btn-controller");
+      const btnManual = document.getElementById("tab-btn-manual");
+      const manualContainer = document.getElementById("manual-container");
+      const loginCard = document.getElementById("login-card");
+      const dashboard = document.getElementById("dashboard-container");
+
+      if (tabName === 'manual') {
+        btnController.classList.remove("active");
+        btnManual.classList.add("active");
+        loginCard.style.display = "none";
+        dashboard.style.display = "none";
+        manualContainer.style.display = "block";
+      } else {
+        btnManual.classList.remove("active");
+        btnController.classList.add("active");
+        manualContainer.style.display = "none";
+
+        const isConnected = port !== null && port.readable;
+        if (isConnected) {
+          loginCard.style.display = "none";
+          dashboard.style.display = "grid";
+        } else {
+          loginCard.style.display = "flex";
+          dashboard.style.display = "none";
+        }
+      }
+    }
+
     // Update connection UI and Header options
     function updateConnectionUI(connected) {
       const loginCard = document.getElementById("login-card");
       const dashboard = document.getElementById("dashboard-container");
+      const manualContainer = document.getElementById("manual-container");
       const btnDisconnect = document.getElementById("btn-disconnect-header");
       const btnWrite = document.getElementById("btn-write");
       const badge = document.getElementById("status-badge");
       const badgeText = document.getElementById("status-text");
 
       if (connected) {
-        loginCard.style.display = "none";
-        dashboard.style.display = "grid";
         btnDisconnect.style.display = "flex";
         btnWrite.disabled = false;
         badge.classList.add("connected");
         badgeText.textContent = "Connected";
+
+        if (currentTab === 'controller') {
+          loginCard.style.display = "none";
+          dashboard.style.display = "grid";
+          manualContainer.style.display = "none";
+        } else {
+          loginCard.style.display = "none";
+          dashboard.style.display = "none";
+          manualContainer.style.display = "block";
+        }
       } else {
-        loginCard.style.display = "flex";
-        dashboard.style.display = "none";
         btnDisconnect.style.display = "none";
         btnWrite.disabled = true;
         badge.classList.remove("connected");
         badgeText.textContent = "Disconnected";
+
+        if (currentTab === 'controller') {
+          loginCard.style.display = "flex";
+          dashboard.style.display = "none";
+          manualContainer.style.display = "none";
+        } else {
+          loginCard.style.display = "none";
+          dashboard.style.display = "none";
+          manualContainer.style.display = "block";
+        }
       }
     }
 
@@ -1158,7 +1475,7 @@
       currentOrder.forEach((modeIdx, position) => {
         const itemDiv = document.createElement("div");
         itemDiv.className = `reorder-item${modeIdx === 0 ? " locked" : ""}`;
-        
+
         let label = rawModes[modeIdx];
         if (modeIdx === 1) label = `Auto (${ch1Val})`;
         else if (modeIdx === 2) label = `Auto (${ch2Val})`;
@@ -1215,11 +1532,11 @@
     function moveItem(index, direction) {
       const targetIndex = index + direction;
       if (targetIndex < 1 || targetIndex >= currentOrder.length) return; // index 0 is locked
-      
+
       const temp = currentOrder[index];
       currentOrder[index] = currentOrder[targetIndex];
       currentOrder[targetIndex] = temp;
-      
+
       renderOrderList();
     }
 
@@ -1233,7 +1550,7 @@
       const selectEl = document.getElementById("add-mode-select");
       const container = document.getElementById("add-option-container");
       if (!selectEl || !container) return;
-      
+
       selectEl.innerHTML = "";
 
       // Find all rawModes indices that are NOT in currentOrder
@@ -1257,7 +1574,7 @@
       unusedModes.forEach(modeIdx => {
         const option = document.createElement("option");
         option.value = modeIdx;
-        
+
         let label = rawModes[modeIdx];
         if (modeIdx === 1) label = `Auto (${ch1Val})`;
         else if (modeIdx === 2) label = `Auto (${ch2Val})`;
@@ -1313,224 +1630,9 @@
     // Initialize list
     renderOrderList();
 
-    // --- ZERO-DEPENDENCY INLINE WEBUSB SERIAL DRIVER FOR ANDROID MOBILE CHROME & OPERA ---
-    class WebUSBSerialPort {
-      constructor(usbDevice) {
-        this.device = usbDevice;
-        this.interfaceNumber = 0;
-        this.endpointIn = 1;
-        this.endpointOut = 2;
-        this._readable = null;
-        this._writable = null;
-        this.isOpen = false;
-      }
-
-      async open(options = { baudRate: 115200 }) {
-        await this.device.open();
-        if (this.device.configuration === null) {
-          await this.device.selectConfiguration(1);
-        }
-
-        let foundIn = null;
-        let foundOut = null;
-        let foundIf = 0;
-
-        for (const iface of this.device.configuration.interfaces) {
-          for (const alt of iface.alternates) {
-            for (const ep of alt.endpoints) {
-              if (ep.direction === 'in' && ep.type === 'bulk') {
-                foundIn = ep.endpointNumber;
-                foundIf = iface.interfaceNumber;
-              }
-              if (ep.direction === 'out' && ep.type === 'bulk') {
-                foundOut = ep.endpointNumber;
-                foundIf = iface.interfaceNumber;
-              }
-            }
-          }
-        }
-
-        this.interfaceNumber = foundIf;
-        if (foundIn !== null) this.endpointIn = foundIn;
-        if (foundOut !== null) this.endpointOut = foundOut;
-
-        try {
-          await this.device.claimInterface(this.interfaceNumber);
-        } catch (e) {
-          if (this.device.configuration.interfaces.length > 1) {
-            try {
-              await this.device.claimInterface(1);
-              this.interfaceNumber = 1;
-            } catch (e2) {
-              console.warn("Claim interface 1 fallback notice:", e2);
-            }
-          }
-        }
-
-        const baudRate = options.baudRate || 115200;
-        const lineCoding = new Uint8Array([
-          baudRate & 0xff,
-          (baudRate >> 8) & 0xff,
-          (baudRate >> 16) & 0xff,
-          (baudRate >> 24) & 0xff,
-          0, 0, 8
-        ]);
-
-        try {
-          await this.device.controlTransferOut({
-            requestType: 'class',
-            recipient: 'interface',
-            request: 0x20, // SET_LINE_CODING
-            value: 0,
-            index: this.interfaceNumber
-          }, lineCoding);
-        } catch (e) {}
-
-        try {
-          await this.device.controlTransferOut({
-            requestType: 'class',
-            recipient: 'interface',
-            request: 0x22, // SET_CONTROL_LINE_STATE
-            value: 0x03,   // DTR + RTS
-            index: this.interfaceNumber
-          });
-        } catch (e) {}
-
-        this.isOpen = true;
-
-        const self = this;
-        this._readable = new ReadableStream({
-          async pull(controller) {
-            if (!self.isOpen) return;
-            try {
-              const result = await self.device.transferIn(self.endpointIn, 64);
-              if (result.data && result.data.byteLength > 0) {
-                controller.enqueue(new Uint8Array(result.data.buffer));
-              }
-            } catch (err) {
-              if (self.isOpen) {
-                controller.error(err);
-              }
-            }
-          },
-          cancel() {
-            self.isOpen = false;
-          }
-        });
-
-        this._writable = new WritableStream({
-          async write(chunk) {
-            if (!self.isOpen) return;
-            await self.device.transferOut(self.endpointOut, chunk);
-          }
-        });
-      }
-
-      get readable() {
-        return this._readable;
-      }
-
-      get writable() {
-        return this._writable;
-      }
-
-      async close() {
-        this.isOpen = false;
-        try {
-          await this.device.releaseInterface(this.interfaceNumber);
-        } catch (e) {}
-        try {
-          await this.device.close();
-        } catch (e) {}
-      }
-    }
-
-    class WebUSBSerialAPI {
-      async requestPort(options = {}) {
-        if (!('usb' in navigator)) {
-          throw new Error("WebUSB (navigator.usb) is not available on this browser/context.");
-        }
-
-        // Map both vendorId & usbVendorId filters properly for WebUSB
-        let usbFilters = [];
-        if (options.filters && Array.isArray(options.filters)) {
-          usbFilters = options.filters.map(f => {
-            const filter = {};
-            if (f.vendorId !== undefined) filter.vendorId = f.vendorId;
-            if (f.usbVendorId !== undefined) filter.vendorId = f.usbVendorId;
-            if (f.productId !== undefined) filter.productId = f.productId;
-            if (f.usbProductId !== undefined) filter.productId = f.usbProductId;
-            return filter;
-          }).filter(f => Object.keys(f).length > 0);
-        }
-
-        if (usbFilters.length === 0) {
-          usbFilters = [
-            { vendorId: 0x303a }, // Espressif ESP32-C3 / S3 / ESP8266
-            { vendorId: 0x10c4 }, // Silicon Labs CP2102 / CP2104
-            { vendorId: 0x1a86 }, // QinHeng CH340 / CH341 / CH9102
-            { vendorId: 0x0403 }, // FTDI
-            { vendorId: 0x2341 }, // Arduino
-            { vendorId: 0x2e8a }  // Raspberry Pi Pico
-          ];
-        }
-
-        let device;
-        try {
-          device = await navigator.usb.requestDevice({ filters: usbFilters });
-        } catch (err) {
-          if (err.name === 'NotFoundError' || err.message.includes('No device selected')) {
-            throw err; // User cancelled the USB picker prompt
-          }
-          // Retry matching any USB device
-          device = await navigator.usb.requestDevice({ filters: [{}] });
-        }
-
-        return new WebUSBSerialPort(device);
-      }
-
-      async getPorts() {
-        if (!('usb' in navigator)) return [];
-        const devices = await navigator.usb.getDevices();
-        return devices.map(d => new WebUSBSerialPort(d));
-      }
-
-      addEventListener(type, listener) {
-        if ('usb' in navigator && navigator.usb.addEventListener) {
-          navigator.usb.addEventListener(type, listener);
-        }
-      }
-
-      removeEventListener(type, listener) {
-        if ('usb' in navigator && navigator.usb.removeEventListener) {
-          navigator.usb.removeEventListener(type, listener);
-        }
-      }
-    }
-
-    // Multi-layer Web Serial & WebUSB API provider
     function getSerialApi() {
-      // 1. Native Web Serial API (Desktop Chrome, Edge, Opera)
       if ('serial' in navigator && navigator.serial) {
         return navigator.serial;
-      }
-      // 2. Official Google webserial-polyfill if loaded via script CDN
-      try {
-        if (typeof serial !== 'undefined' && serial && typeof serial.Serial === 'function') {
-          if (!window._polyfillInstance) window._polyfillInstance = new serial.Serial();
-          return window._polyfillInstance;
-        }
-        if (typeof window.serial !== 'undefined' && window.serial && typeof window.serial.Serial === 'function') {
-          if (!window._polyfillInstance) window._polyfillInstance = new window.serial.Serial();
-          return window._polyfillInstance;
-        }
-      } catch (e) {}
-      // 3. Embedded Zero-Dependency Inline WebUSB Serial Driver (Android Chrome / Opera)
-      if ('usb' in navigator && navigator.usb) {
-        if (!window._inlineWebUSBSerial) {
-          window._inlineWebUSBSerial = new WebUSBSerialAPI();
-        }
-        return window._inlineWebUSBSerial;
       }
       return null;
     }
@@ -1539,15 +1641,8 @@
       const serialApi = getSerialApi();
 
       if (!serialApi) {
-        let diagnosticMsg = "";
-        if (!window.isSecureContext) {
-          diagnosticMsg = "\n\n⚠️ INSECURE CONTEXT: Chrome disables WebUSB on plain HTTP.\nPlease open this HTML file directly via file:// or host over HTTPS.";
-        } else if (!('usb' in navigator)) {
-          diagnosticMsg = "\n\n⚠️ WebUSB is not supported by your browser.\n- Android: Use Google Chrome or Opera.\n- iOS: Apple blocks WebUSB on all iOS browsers.";
-        }
-
-        logMessage("Connection failed: Serial/WebUSB unavailable." + diagnosticMsg, "err");
-        alert("Web Serial / WebUSB is not active." + diagnosticMsg);
+        logMessage("Connection failed: Web Serial API is not supported by your browser. Please use Desktop Google Chrome, Microsoft Edge, or Opera.", "err");
+        alert("Web Serial API is not supported by your browser.\n\nPlease open this manager on a compatible desktop browser such as Google Chrome, Microsoft Edge, or Opera.");
         return;
       }
 
@@ -1561,7 +1656,7 @@
         ];
 
         logMessage("Prompting for USB serial device connection...", "sys");
-        
+
         try {
           port = await serialApi.requestPort({ filters });
         } catch (filterErr) {
@@ -1572,19 +1667,15 @@
         }
 
         await port.open({ baudRate: 115200 });
-        
+
         updateConnectionUI(true);
         logMessage("Serial Connection established successfully!", "sys");
-        
+
         readLoopPromise = readSerialStream();
         setTimeout(readConfig, 1000);
       } catch (err) {
-        let extraTip = "";
-        if (err.message && (err.message.includes("claim") || err.message.includes("busy") || err.message.includes("Access denied"))) {
-          extraTip = "\n\n💡 TIP: If another app (like Kai Morich's Serial USB Terminal) is running in the background, please CLOSE/SWIPE AWAY that app and replug your USB OTG cable so Android releases the USB port to Chrome.";
-        }
-        logMessage(`Connection failed: ${err.message}${extraTip}`, "err");
-        alert(`Connection failed: ${err.message}${extraTip}`);
+        logMessage(`Connection failed: ${err.message}`, "err");
+        alert(`Connection failed: ${err.message}`);
       }
     }
 
@@ -1605,11 +1696,11 @@
       } catch (err) {
         logMessage(`Disconnect error: ${err.message}`, "err");
       }
-      
+
       port = null;
       reader = null;
       updateConnectionUI(false);
-      
+
       logMessage("Serial Connection closed.", "sys");
     }
 
@@ -1623,10 +1714,10 @@
           while (keepReading) {
             const { value, done } = await reader.read();
             if (done) break;
-            
+
             const chunk = textDecoder.decode(value);
             inputBuffer += chunk;
-            
+
             // Check for newlines
             let newlineIdx;
             while ((newlineIdx = inputBuffer.indexOf("\n")) !== -1) {
@@ -1665,9 +1756,8 @@
     }
 
     // Listen for wired disconnect (device pulled out)
-    const serialApi = getSerialApi();
-    if (serialApi && serialApi.addEventListener) {
-      serialApi.addEventListener("disconnect", (event) => {
+    if ('serial' in navigator && navigator.serial && navigator.serial.addEventListener) {
+      navigator.serial.addEventListener("disconnect", (event) => {
         if (port && event.target === port) {
           logMessage("Wired USB connection broken. Logging out...", "err");
           disconnectSerial();
@@ -1684,39 +1774,39 @@
         const jsonStr = line.substring(4);
         try {
           const cfg = JSON.parse(jsonStr);
-          
+
           // Populate settings
           document.getElementById("bootText").value = cfg.bootText;
           document.getElementById("ch1").value = cfg.ch1;
           document.getElementById("ch2").value = cfg.ch2;
           document.getElementById("ch3").value = cfg.ch3;
           document.getElementById("ch4").value = cfg.ch4;
-          
+
           if (cfg.menuStyle === 1) {
             document.getElementById("styleVertical").checked = true;
           } else {
             document.getElementById("styleHorizontal").checked = true;
           }
-          
+
           // Set Font dropdown
           if (cfg.menuFont !== undefined) {
             document.getElementById("menuFont").value = cfg.menuFont;
           }
-          
+
           // Set Interval slider
           const secInterval = Math.floor(cfg.autoInterval / 1000);
           document.getElementById("autoInterval").value = secInterval;
           document.getElementById("autoInterval").dispatchEvent(new Event("input"));
-          
+
           // Set Longpress slider
           document.getElementById("longPress").value = cfg.longPress;
           document.getElementById("longPress").dispatchEvent(new Event("input"));
-          
+
           // Set order
           if (Array.isArray(cfg.order)) {
             currentOrder = cfg.order;
           }
-          
+
           renderOrderList();
           logMessage("Configuration read successfully.", "sys");
         } catch (err) {
@@ -1755,7 +1845,7 @@
       const orderStr = currentOrder.join(",");
 
       const packet = `SET_CFG;bootText=${bootTextVal};ch1=${ch1Val};ch2=${ch2Val};ch3=${ch3Val};ch4=${ch4Val};style=${styleVal};font=${fontVal};interval=${intervalVal};longpress=${longpressVal};buzzer=0;order=${orderStr}`;
-      
+
       writeSerial(packet);
     };
 
@@ -1769,4 +1859,5 @@
     updateConnectionUI(false); // start logged out
   </script>
 </body>
+
 </html>
