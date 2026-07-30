@@ -64,26 +64,18 @@ The Osprey Controller has **4 independent relay channels** that act as automatic
 
 ---
 
-### Hardware Pinout & GPIO Assignments:
-- **Display Driver**: SH110X (SH1106G Monochrome OLED, 128x64, I2C: SDA=GPIO20, SCL=GPIO21)
-- **Touch Sensor**: GPIO 1 (TTP223 / Tactile touch module)
-- **Relay Channel 1**: GPIO 0
-- **Relay Channel 2**: GPIO 2
-- **Relay Channel 3**: GPIO 3
-- **Relay Channel 4**: GPIO 4
-
----
-
 ## 3. Using the Web Controller Manager
 
 The Web Controller is a visual, dual-theme control dashboard that runs in your web browser on both Desktop and Mobile (Android).
 
-### Desktop Compatibility:
-- Open in Google Chrome, Microsoft Edge, or Opera. Connect via USB cable.
+### Android Mobile & Desktop Compatibility:
+- **Desktop**: Open in Google Chrome, Microsoft Edge, or Opera. Connect via USB cable.
+- **Android Mobile**: Connect your microcontroller to your Android phone using a **USB-C OTG (On-The-Go) adapter**. Open the page in **Google Chrome** or **Opera**. The integrated Google WebSerial WebUSB polyfill will automatically bridge Web Serial requests over WebUSB.
+- **iOS Note**: Apple iOS (iPhones / iPads) blocks WebSerial and WebUSB API access across all browsers due to WebKit security policies.
 
 ### Logging In & Connecting:
-1. Plug the Osprey Controller into your computer USB port.
-2. Open **[OSPREY WEB Controller](https://micromakerlabsfiles-git.github.io/OSPREY-Controller/)** in a compatible browser.
+1. Plug the Osprey Controller into your computer or Android phone's USB port.
+2. Open **[index.html](file:///f:/Codes/Osprey_controller/index.html)** in a compatible browser.
 3. Click the **Connect Controller** button.
 4. A browser popup will prompt you to select the connected USB device ("ESP32 USB" or USB serial bridge).
 5. Once connected, the dashboard opens for configuration management.
